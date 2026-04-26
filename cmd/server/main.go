@@ -68,8 +68,25 @@ func main() {
 	
 	// not implemented
 	router.DELETE("/node", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"data": "a",
+		key := c.Query("key")
+		if key == "" {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "no key in query",
+			})
+			return
+		}
+
+		err := store.Delete(key) 
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"message": "successfully deleted!",
 		})
 	})
 	router.Run()
