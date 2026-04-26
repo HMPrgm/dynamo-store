@@ -14,7 +14,7 @@ func NewMemoryStore() *MemoryStore {
 	}
 }
 
-func (m *MemoryStore) Put(key string, value []byte) error {
+func (m *MemoryStore) Post(key string, value []byte) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
